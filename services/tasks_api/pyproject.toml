@@ -2,7 +2,7 @@
 name = "tasks-api"
 version = "0.1.0"
 description = ""
-authors = ["Abel Huanca <abelthf@gmail.com>"]
+authors = ["Christian Chiarulli <chris.machine@pm.me>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
