@@ -70,9 +70,8 @@ jobs:
         run: poetry run flake8 .
       - name: Run bandit
         run: poetry run bandit .
-
-  deploy-developmet:  # new
-    needs: [ test, code-quality]
+  deploy-development:
+    needs: [ test, code-quality ]
     strategy:
       fail-fast: false
       matrix:
