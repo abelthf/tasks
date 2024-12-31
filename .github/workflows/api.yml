@@ -5,11 +5,12 @@ on:
       - 'services/tasks_api/**'
       - '.github/workflows/api.yml'
 
-env: # new
+
+env:  # new
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   AWS_DEFAULT_REGION: eu-west-1
-  APP_EVIRONMENT: developmet
+  APP_ENVIRONMENT: development
 
 jobs:
   test:
@@ -17,7 +18,7 @@ jobs:
       fail-fast: false
       matrix:
         python-version: [3.13]
-        poetry-version: [1.8]
+        poetry-version: [1.8.5]
         os: [ubuntu-latest]
     runs-on: ${{ matrix.os }}
     defaults:
@@ -39,13 +40,13 @@ jobs:
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
         with:
-          token: ${{ secrets.CODECOV_TOKE }}
+          token: ${{ secrets.CODECOV_TOKEN }}
   code-quality:
     strategy:
       fail-fast: false
       matrix:
         python-version: [3.13]
-        poetry-version: [1.8]
+        poetry-version: [1.8.5]
         os: [ubuntu-latest]
     runs-on: ${{ matrix.os }}
     defaults:
@@ -70,13 +71,13 @@ jobs:
         run: poetry run flake8 .
       - name: Run bandit
         run: poetry run bandit .
-  deploy-development:
+  deploy-development:  # new
     needs: [ test, code-quality ]
     strategy:
       fail-fast: false
       matrix:
         python-version: [3.13]
-        poetry-version: [1.8]
+        poetry-version: [1.8.5]
         node-version: [22.12]
         os: [ubuntu-latest]
     runs-on: ${{ matrix.os }}
@@ -84,12 +85,12 @@ jobs:
       run:
         working-directory: services/tasks_api
     steps:
-      - name: checkout Code
+      - name: Checkout Code
         uses: actions/checkout@v3
-      - name: Set up Python 3:13
+      - name: Set up Python 3.13
         uses: actions/setup-python@v3
         with:
-          poetry-version: ${{ matrix.python-version }}
+          python-version: ${{ matrix.python-version }}
       - name: Install poetry
         uses: abatilo/actions-poetry@v2.0.0
         with:
@@ -97,6 +98,8 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
+      - name: Install Serverless Framework
+        run: npm install -g serverless
       - name: Install NPM dependencies
         run: npm install
       - name: Deploy
