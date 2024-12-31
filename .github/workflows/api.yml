@@ -12,7 +12,7 @@ env: # new
   APP_EVIRONMENT: developmet
 
 jobs:
-  tests:
+  test:
     strategy:
       fail-fast: false
       matrix:
