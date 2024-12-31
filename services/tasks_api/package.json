@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "dependencies": {},
+  "dependencies": {
+    "serverless": "^3.40.0"
+  },
   "devDependencies": {
     "serverless-python-requirements": "^5.1.1"
   },
