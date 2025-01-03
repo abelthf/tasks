@@ -32,7 +32,7 @@ custom:
     usePoetry: true
     noDeploy:
       - boto3  # already on Lambda
-      - botocore  # already on Lambdaa
+      - botocore  # already on Lambda
 
 plugins:
   - serverless-python-requirements
